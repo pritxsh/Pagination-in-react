@@ -16,12 +16,25 @@ const Pagination = () => {
   const totalPages = Math.ceil(tabledata?.total / rowsPerPage);
   useEffect(() => {
     axios.get("https://dummyjson.com/users?limit=0").then((response) => {
-      // console.log(response);
+      console.log(response);
       setTabledata(response?.data);
     });
   }, []);
+  const handlePrev = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handleNext = () => {
+    setCurrentPage((next) => Math.min(next + 1, totalPages));
+  };
+
+  const handlePageClick = (pageno) => {
+    setCurrentPage(pageno);
+  };
+
   return (
     <>
+      <h1>DummyCity Data</h1>
       <table className="table">
         <thead>
           <tr>
@@ -43,11 +56,16 @@ const Pagination = () => {
         </tbody>
       </table>
       <div className="pagination">
-        <button>Prev</button>
+        <button onClick={handlePrev}>Prev</button>
         {Array.from({ length: totalPages }, (_, index) => (
-          <button>{index + 1}</button>
+          <button
+            // className={clicked ? "clicked" : "pagination button"}
+            onClick={() => handlePageClick(index + 1)}
+          >
+            {index + 1}
+          </button>
         ))}
-        <button>Next</button>
+        <button onClick={handleNext}>Next</button>
       </div>
     </>
   );
