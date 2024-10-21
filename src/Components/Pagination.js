@@ -56,16 +56,20 @@ const Pagination = () => {
         </tbody>
       </table>
       <div className="pagination">
-        <button onClick={handlePrev}>Prev</button>
+        <button onClick={handlePrev} disabled={currentPage === 1}>
+          Prev
+        </button>
         {Array.from({ length: totalPages }, (_, index) => (
           <button
-            // className={clicked ? "clicked" : "pagination button"}
+            className={currentPage === index + 1 ? "active" : ""}
             onClick={() => handlePageClick(index + 1)}
           >
             {index + 1}
           </button>
         ))}
-        <button onClick={handleNext}>Next</button>
+        <button onClick={handleNext} disabled={currentPage === totalPages}>
+          Next
+        </button>
       </div>
     </>
   );
